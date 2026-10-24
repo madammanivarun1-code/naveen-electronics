@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FDFCF7;
+    color: #0B192C;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom electric styles and scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.electric-glow {
+  box-shadow: 0 0 15px rgba(255, 210, 0, 0.45);
+}
+
+.electric-glow-sm {
+  box-shadow: 0 0 8px rgba(255, 210, 0, 0.35);
+}
+
+.electric-gradient {
+  background: linear-gradient(135deg, #0B192C 0%, #152A38 100%);
+}
+
+.electric-accent-gradient {
+  background: linear-gradient(135deg, #FFD200 0%, #F59E0B 100%);
+}
+
+/* Shimmer animation for loading states */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #F4EFE6 25%, #E9E0D1 50%, #F4EFE6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
