@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import ProductDetailModal from './components/ProductDetailModal';
+import Product3DViewerModal from './components/Product3DViewerModal';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -22,7 +23,7 @@ import {
 } from './pages/InfoPages';
 
 function MainContent() {
-  const { activePage, toast } = useStore();
+  const { activePage, toast, product3DModalOpen, productFor3D, close3DViewer } = useStore();
 
   const renderPage = () => {
     switch (activePage) {
@@ -78,6 +79,14 @@ function MainContent() {
 
       {/* Global Product Detail Modal */}
       <ProductDetailModal />
+
+      {/* Global 3D Interactive Studio Modal */}
+      {product3DModalOpen && (
+        <Product3DViewerModal
+          product={productFor3D}
+          onClose={close3DViewer}
+        />
+      )}
 
       {/* Floating WhatsApp Helpdesk */}
       <WhatsAppFloatingButton />

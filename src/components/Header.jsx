@@ -16,7 +16,8 @@ import {
   SlidersHorizontal,
   Home,
   CheckCircle2,
-  MessageCircle
+  MessageCircle,
+  Sparkles
 } from 'lucide-react';
 
 export default function Header() {
@@ -32,7 +33,8 @@ export default function Header() {
     selectedCity,
     setSelectedCity,
     products,
-    viewProductDetail
+    viewProductDetail,
+    open3DViewer
   } = useStore();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -408,6 +410,15 @@ export default function Header() {
               className="px-3 py-1 rounded-lg text-amber-700 font-bold hover:bg-amber-100 transition-colors whitespace-nowrap"
             >
               🏠 Shop By Room
+            </button>
+
+            {/* 3D Studio Button */}
+            <button
+              onClick={() => open3DViewer('wire')}
+              className="px-3 py-1 rounded-lg bg-navy-900 text-electric hover:bg-navy-800 font-black transition-all whitespace-nowrap shadow-sm flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-electric animate-pulse" />
+              <span>3D Studio</span>
             </button>
           </nav>
 

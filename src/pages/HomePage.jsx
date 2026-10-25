@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { CATEGORIES, ROOMS, STORE_INFO } from '../data/categories';
+import Hero3DCanvas from '../components/Hero3DCanvas';
+import Room3DExplorer from '../components/Room3DExplorer';
 import { 
   Zap, 
   ArrowRight, 
@@ -12,7 +14,8 @@ import {
   ShoppingCart, 
   Check,
   MessageCircle,
-  Phone
+  Phone,
+  Sparkles
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -21,7 +24,8 @@ export default function HomePage() {
     navigateTo, 
     viewProductDetail, 
     addToCart, 
-    selectedCity 
+    selectedCity,
+    open3DViewer 
   } = useStore();
 
   const [activeRoomId, setActiveRoomId] = useState('living-room');
@@ -91,58 +95,27 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Column: Estimated Benchmark Rates Card */}
-          <div className="lg:col-span-5">
-            <div className="bg-navy-900/90 rounded-3xl p-6 border border-navy-700/80 shadow-2xl backdrop-blur-md space-y-5">
-              <div className="flex items-center justify-between border-b border-navy-800 pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-electric animate-pulse"></div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider">
-                    Today’s Estimated Benchmarks
-                  </span>
-                </div>
-                <span className="text-[10px] text-amber-300 font-mono bg-navy-800 px-2 py-0.5 rounded">
-                  Gadwal Market
-                </span>
-              </div>
+          {/* Right Column: Real-Time 3D Showcase & Live Rates Ticker */}
+          <div className="lg:col-span-5 space-y-4">
+            <Hero3DCanvas onOpenViewer={(type) => open3DViewer(type)} />
 
-              {/* Rates list */}
-              <div className="space-y-2.5 text-xs">
-                <div className="flex items-center justify-between p-2 rounded-lg bg-navy-950/60 border border-navy-800">
-                  <span className="text-slate-300">Polycab 1.5 sq mm FR Wire</span>
-                  <span className="font-mono font-bold text-amber-400">₹30 / metre (est.)</span>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded-lg bg-navy-950/60 border border-navy-800">
-                  <span className="text-slate-300">Goldmedal 2.5 sq mm FRLS Wire</span>
-                  <span className="font-mono font-bold text-amber-400">₹59 / metre (est.)</span>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded-lg bg-navy-950/60 border border-navy-800">
-                  <span className="text-slate-300">Modular 6A Switch (1-Way)</span>
-                  <span className="font-mono font-bold text-amber-400">₹60 / piece (est.)</span>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded-lg bg-navy-950/60 border border-navy-800">
-                  <span className="text-slate-300">16A Power Socket (Geyser/AC)</span>
-                  <span className="font-mono font-bold text-amber-400">₹250 / piece (est.)</span>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded-lg bg-navy-950/60 border border-navy-800">
-                  <span className="text-slate-300">16A Single-Pole MCB</span>
-                  <span className="font-mono font-bold text-amber-400">₹180 / piece (est.)</span>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded-lg bg-navy-950/60 border border-navy-800">
-                  <span className="text-slate-300">1200 mm High-Speed Ceiling Fan</span>
-                  <span className="font-mono font-bold text-amber-400">₹2,500 / piece (est.)</span>
-                </div>
+            {/* Quick Benchmark Rates Ticker */}
+            <div className="bg-navy-900/90 rounded-2xl p-3 border border-navy-700/80 shadow-md backdrop-blur-md flex items-center justify-between text-[11px]">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-electric animate-pulse"></span>
+                <span className="text-slate-300 font-bold">Polycab 1.5mm²:</span>
+                <span className="font-mono font-black text-electric">₹30/m</span>
               </div>
-
-              <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20 text-[11px] text-amber-200 leading-snug">
-                Prices vary by daily copper rates. Confirm exact live price with owner before billing. Full house wiring packages receive special contractor discounts.
+              <span className="text-navy-700">•</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-slate-300 font-bold">Goldmedal 2.5mm²:</span>
+                <span className="font-mono font-black text-amber-300">₹59/m</span>
               </div>
-
               <button
                 onClick={() => navigateTo('shop')}
-                className="w-full py-2.5 bg-white hover:bg-slate-100 text-navy-950 text-xs font-black rounded-xl transition-colors text-center block"
+                className="text-[10px] font-black text-amber-400 hover:underline"
               >
-                View Full Product Catalog & Price Sheet →
+                All Rates →
               </button>
             </div>
           </div>
@@ -288,6 +261,13 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Interactive 3D Room Visualizer */}
+            <Room3DExplorer
+              activeRoom={activeRoom}
+              onSelectProduct={viewProductDetail}
+              onOpen3D={open3DViewer}
+            />
+
             {/* Room Products Showcase */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {roomProducts.map((product) => (
@@ -304,6 +284,17 @@ export default function HomePage() {
                       <span className="absolute top-2 left-2 bg-navy-900/90 text-white text-[10px] font-bold px-2 py-0.5 rounded">
                         {product.brand}
                       </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          open3DViewer(product);
+                        }}
+                        className="absolute bottom-2 right-2 bg-navy-950/85 hover:bg-electric hover:text-navy-950 text-electric text-[10px] font-black px-2 py-0.5 rounded-lg border border-navy-700/80 backdrop-blur-sm flex items-center gap-1 transition-all shadow"
+                        title="Inspect in 3D"
+                      >
+                        <Sparkles className="w-3 h-3" />
+                        <span>3D</span>
+                      </button>
                     </div>
 
                     <div>
@@ -398,9 +389,21 @@ export default function HomePage() {
                     {product.brand}
                   </span>
 
-                  <span className="absolute bottom-2 right-2 bg-white/90 text-navy-900 text-[10px] font-black px-2 py-0.5 rounded shadow">
+                  <span className="absolute bottom-2 left-2 bg-white/90 text-navy-900 text-[10px] font-black px-2 py-0.5 rounded shadow">
                     ⭐ {product.rating}
                   </span>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      open3DViewer(product);
+                    }}
+                    className="absolute bottom-2 right-2 bg-navy-950/85 hover:bg-electric hover:text-navy-950 text-electric text-[10px] font-black px-2 py-0.5 rounded-lg border border-navy-700/80 backdrop-blur-sm flex items-center gap-1 transition-all shadow"
+                    title="Inspect in 3D"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>3D</span>
+                  </button>
                 </div>
 
                 <div>

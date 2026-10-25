@@ -12,7 +12,8 @@ import {
   Info, 
   Star,
   Layers,
-  MessageCircle
+  MessageCircle,
+  Sparkles
 } from 'lucide-react';
 
 export default function ProductDetailModal() {
@@ -24,7 +25,8 @@ export default function ProductDetailModal() {
     toggleWishlist, 
     wishlist, 
     products, 
-    viewProductDetail 
+    viewProductDetail,
+    open3DViewer 
   } = useStore();
 
   if (!productModalOpen || !selectedProduct) return null;
@@ -140,6 +142,19 @@ export default function ProductDetailModal() {
                   {selectedProduct.inStock ? 'Available at Gadwal Shop' : 'Order On Request'}
                 </div>
               </div>
+
+              {/* Interactive 3D Inspection Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  setProductModalOpen(false);
+                  open3DViewer(selectedProduct);
+                }}
+                className="w-full py-2.5 bg-gradient-to-r from-navy-950 via-navy-900 to-slate-800 hover:from-navy-900 hover:to-slate-700 text-electric rounded-xl text-xs font-black shadow-md border border-navy-700 flex items-center justify-center gap-2 transition-all group"
+              >
+                <Sparkles className="w-4 h-4 text-electric group-hover:rotate-12 transition-transform" />
+                <span>Interactive 3D View (Rotate 360° & Test)</span>
+              </button>
 
               {/* Estimate Note */}
               <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
