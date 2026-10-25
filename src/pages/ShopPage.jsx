@@ -17,8 +17,7 @@ import {
   X, 
   Info,
   Zap,
-  ArrowUpDown,
-  Sparkles
+  ArrowUpDown
 } from 'lucide-react';
 
 export default function ShopPage() {
@@ -32,7 +31,6 @@ export default function ShopPage() {
     setSearchQuery,
     addToCart,
     viewProductDetail,
-    open3DViewer,
     toggleWishlist,
     wishlist
   } = useStore();
@@ -546,17 +544,6 @@ export default function ShopPage() {
                           Pre-Order
                         </span>
                       )}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          open3DViewer(product);
-                        }}
-                        className="absolute bottom-2 right-2 bg-navy-950/85 hover:bg-electric hover:text-navy-950 text-electric text-[10px] font-black px-2 py-0.5 rounded-lg border border-navy-700/80 backdrop-blur-sm flex items-center gap-1 transition-all shadow"
-                        title="Inspect in 3D"
-                      >
-                        <Sparkles className="w-3 h-3" />
-                        <span>3D</span>
-                      </button>
                     </div>
 
                     <div className="flex-1">

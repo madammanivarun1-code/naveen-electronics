@@ -77,29 +77,6 @@ export function StoreProvider({ children }) {
   // 5. Toast / Notification
   const [toast, setToast] = useState(null);
 
-  const [product3DModalOpen, setProduct3DModalOpen] = useState(false);
-  const [productFor3D, setProductFor3D] = useState(null);
-
-  const open3DViewer = (product) => {
-    if (typeof product === 'string') {
-      const match = products.find(p => 
-        (product === 'wire' && p.category === 'wires-cables') ||
-        (product === 'switch' && p.category === 'switches-sockets') ||
-        (product === 'fan' && p.category === 'fans-ventilation') ||
-        (product === 'mcb' && p.category === 'protection-distribution')
-      ) || products[0];
-      setProductFor3D(match);
-    } else {
-      setProductFor3D(product || products[0]);
-    }
-    setProduct3DModalOpen(true);
-  };
-
-  const close3DViewer = () => {
-    setProduct3DModalOpen(false);
-    setProductFor3D(null);
-  };
-
   const showToast = (message, type = 'info') => {
     setToast({ message, type, id: Date.now() });
     setTimeout(() => {
@@ -280,8 +257,6 @@ export function StoreProvider({ children }) {
         searchQuery,
         selectedProduct,
         productModalOpen,
-        product3DModalOpen,
-        productFor3D,
         selectedCity,
         lastOrder,
         rfqModalOpen,
@@ -310,8 +285,6 @@ export function StoreProvider({ children }) {
         toggleWishlist,
         navigateTo,
         viewProductDetail,
-        open3DViewer,
-        close3DViewer,
         placeOrder,
         updateProduct,
         addProduct,
